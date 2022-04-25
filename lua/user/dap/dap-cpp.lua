@@ -1,21 +1,23 @@
 local dap = require('dap')
 
-dap.adapters.cppdbg = {
-  id = 'cppdbg',
+dap.adapters.lldb = {
+  id = 'ccppr_lldb',
   type = "executable",
-  command = os.getenv('HOME') .. '/.config/nvim/lua/user/dap/debugger/ms-vscode.cpptools-1.7.1/debugAdapters/bin/OpenDebugAD7',
+  -- command = os.getenv('HOME') .. '/.config/nvim/lua/user/dap/debugger/ms-vscode.cpptools-1.7.1/debugAdapters/bin/OpenDebugAD7',
+  command = "/opt/homebrew/opt/llvm/bin/lldb-vscode",
 }
 dap.configurations.cpp = {
 -- launch exe
 {
     name = "Launch file",
-    type = "cppdbg",
+    type = "lldb",
     request = "launch",
     program = function()
       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
     end,
     cwd = '${workspaceFolder}',
     stopOnEntry = true,
+    postRunCommands = {'process handle -p true -s false -n false SIGWINCH'},
     setupCommands = {
     {
         description =  'enable pretty printing',

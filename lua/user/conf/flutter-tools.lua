@@ -70,13 +70,13 @@ require("flutter-tools").setup({
 			device = false,
 		},
 	},
-	debugger = {
-		enabled = true,
-		register_configurations = function(_)
-			require("dap").configurations.dart = {}
-			require("dap.ext.vscode").load_launchjs()
-		end,
-	},
+	--debugger = {
+	--	enabled = true,
+	--	register_configurations = function(_)
+	--		require("dap").configurations.dart = {}
+	--		require("dap.ext.vscode").load_launchjs()
+	--	end,
+	--},
 	--debugger = { -- integrate with nvim dap + install dart code debugger
 	--  enabled = false,
 	--  run_via_dap = false, -- use dap instead of a plenary job to run flutter apps
@@ -99,7 +99,7 @@ require("flutter-tools").setup({
 	},
 	dev_log = {
 		enabled = true,
-		open_cmd = "tabedit", -- command to use to open the log buffer
+		open_cmd = "edit", -- command to use to open the log buffer
 	},
 	dev_tools = {
 		autostart = false, -- autostart devtools server if not detected
