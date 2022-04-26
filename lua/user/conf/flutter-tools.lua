@@ -21,7 +21,7 @@ local flutter_lsp_on_attach = function(client, bufnr)
 		vim.api.nvim_buf_set_keymap(bufnr, l, r, c, { noremap = true, silent = true })
 	end
 
-	buf_set_keymap("n", "gA", '<CMD>lua require("telescope").extensions.flutter.commands()<CR>')
+	buf_set_keymap("n", "<Leader>ff", '<CMD>lua require("telescope").extensions.flutter.commands()<CR>')
 	--buf_set_keymap("n", "<LEADER>t", "<CMD>DartFmt<CR>")
 
 	local flutter_command = require("flutter-tools.utils").command
@@ -102,12 +102,12 @@ require("flutter-tools").setup({
 		open_cmd = "edit", -- command to use to open the log buffer
 	},
 	dev_tools = {
-		autostart = false, -- autostart devtools server if not detected
+		autostart = true, -- autostart devtools server if not detected
 		auto_open_browser = false, -- Automatically opens devtools in the browser
 	},
 	outline = {
 		open_cmd = "30vnew", -- command to use to open the outline buffer
-		auto_open = true, -- if true this will open the outline automatically when it is first populated
+		auto_open = false, -- if true this will open the outline automatically when it is first populated
 	},
 	lsp = {
 		color = { -- show the derived colours for dart variables
