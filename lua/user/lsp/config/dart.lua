@@ -15,12 +15,12 @@ return {
 					vim.api.nvim_buf_set_keymap(bufnr, ...)
 				end
 
-        local opts = { noremap = true, silent = true }
-        buf_set_keymap("n", "<leader>ft", "<cmd>!dart format %<CR>", opts)
+				local opts = { noremap = true, silent = true }
+				buf_set_keymap("n", "<leader>ft", "<cmd>!dart format %<CR>", opts)
 				-- 绑定快捷键
 				--require("keybindings").mapLSP(buf_set_keymap)
 
-        -- require("user.lsp.handlers").on_attach(client, bufnr)
+				require("user.lsp.handlers").on_attach(client, bufnr)
 			end,
 		})
 	end,
