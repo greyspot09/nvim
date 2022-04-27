@@ -17,7 +17,7 @@ if true then
     html = require("user.lsp.config.html"),
     cssls = require("user.lsp.config.css"),
     jsonls = require("user.lsp.config.json"),
-    dartls = require("user.lsp.config.dart"),
+    -- dartls = require("user.lsp.config.dart"),  -- 不知道为啥，这里用了dartls，会导致flutter-tools的outline异常
   }
   -- 自动安装 Language Servers
   for name, _ in pairs(servers) do

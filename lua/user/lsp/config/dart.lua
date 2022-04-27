@@ -7,8 +7,8 @@ return {
 			},
 			on_attach = function(client, bufnr)
 				-- 禁用格式化功能，交给专门插件插件处理
-				client.resolved_capabilities.document_formatting = false
-				client.resolved_capabilities.document_range_formatting = false
+				-- client.resolved_capabilities.document_formatting = false
+				-- client.resolved_capabilities.document_range_formatting = false
 
 				print("dart on_attach")
 				local function buf_set_keymap(...)
@@ -20,7 +20,7 @@ return {
 				-- 绑定快捷键
 				--require("keybindings").mapLSP(buf_set_keymap)
 
-				require("user.lsp.handlers").on_attach(client, bufnr)
+				-- require("user.lsp.handlers").on_attach(client, bufnr)
 			end,
 		})
 	end,

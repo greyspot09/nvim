@@ -22,7 +22,8 @@ local flutter_lsp_on_attach = function(client, bufnr)
 	end
 
 	buf_set_keymap("n", "<Leader>ff", '<CMD>lua require("telescope").extensions.flutter.commands()<CR>')
-	--buf_set_keymap("n", "<LEADER>t", "<CMD>DartFmt<CR>")
+	buf_set_keymap("n", "<Leader>ft", "<CMD>DartFmt<CR>")
+  require("user.lsp.handlers").on_attach(client, bufnr)
 
 	local flutter_command = require("flutter-tools.utils").command
 
