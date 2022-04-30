@@ -17,6 +17,7 @@ if true then
     html = require("user.lsp.config.html"),
     cssls = require("user.lsp.config.css"),
     jsonls = require("user.lsp.config.json"),
+    gopls = require("user.lsp.config.go"),
     -- dartls = require("user.lsp.config.dart"),  -- 不知道为啥，这里用了dartls，会导致flutter-tools的outline异常
   }
   -- 自动安装 Language Servers
@@ -31,6 +32,7 @@ if true then
   end
 
   lsp_installer.on_server_ready(function(server)
+    print("lsp_installer on_server_ready:" .. server.name)
     local opts = {
       on_attach = require("user.lsp.handlers").on_attach,
       capabilities = require("user.lsp.handlers").capabilities,
@@ -38,6 +40,7 @@ if true then
 
     local config = servers[server.name]
     if config == nil then
+      print("lsp_installer config is nil, " .. server.name)
       return
     end
     if config.on_setup then
