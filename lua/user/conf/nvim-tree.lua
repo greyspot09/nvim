@@ -1,11 +1,11 @@
 -- https://github.com/kyazdani42/nvim-tree.lua
--- 
+--
 -- <CR> or o on the root folder will cd in the above directory
 -- <C-]> will cd in the directory under the cursor
 -- <BS> will close current opened directory or parent
 -- type a to add a file. Adding a directory requires leaving a leading / at the end of the path.
 -- you can add multiple directories by doing foo/bar/baz/f and it will add foo bar and baz directories and f as a file
--- 
+--
 -- type r to rename a file
 -- type <C-r> to rename a file and omit the filename on input
 -- type x to add/remove file/directory to cut clipboard
@@ -72,22 +72,68 @@ end
 
 local tree_cb = nvim_tree_config.nvim_tree_callback
 
-nvim_tree.setup {
-  disable_netrw = true,
-  hijack_netrw = true,
-  open_on_setup = false,
-  ignore_ft_on_setup = {
-    "startify",
-    "dashboard",
-    "alpha",
-    "startup",
-  },
-  -- auto_close = true,
-  open_on_tab = false,
+nvim_tree.setup({
+  auto_reload_on_write = true,
+  disable_netrw = false,
   hijack_cursor = false,
-  update_cwd = true,
+  hijack_netrw = true,
+  hijack_unnamed_buffer_when_opening = false,
+  ignore_buffer_on_setup = false,
+  open_on_setup = false,
+  open_on_setup_file = false,
+  open_on_tab = false,
+  sort_by = "name",
+  update_cwd = false,
+  view = {
+    width = 30,
+    height = 30,
+    hide_root_folder = false,
+    side = "left",
+    preserve_window_proportions = false,
+    number = false,
+    relativenumber = false,
+    signcolumn = "yes",
+    mappings = {
+      custom_only = false,
+      list = {
+        -- user mappings go here
+        { key = { "l", "<CR>", "o" }, action = "edit" },
+        { key = "h", action = "close_node" },
+        { key = "v", action = "vsplit" },
+        { key = "O", action = "cd" },
+      },
+    },
+  },
+  renderer = {
+    indent_markers = {
+      enable = false,
+      icons = {
+        corner = "└ ",
+        edge = "│ ",
+        none = "  ",
+      },
+    },
+    icons = {
+      webdev_colors = true,
+    },
+  },
+  hijack_directories = {
+    enable = true,
+    auto_open = true,
+  },
+  update_focused_file = {
+    enable = false,
+    update_cwd = false,
+    ignore_list = {},
+  },
+  ignore_ft_on_setup = {},
+  system_open = {
+    cmd = "",
+    args = {},
+  },
   diagnostics = {
     enable = true,
+    show_on_dirs = true,
     icons = {
       hint = "",
       info = "",
@@ -95,55 +141,64 @@ nvim_tree.setup {
       error = "",
     },
   },
-  update_focused_file = {
-    enable = true,
-    update_cwd = true,
-    ignore_list = {},
+  filters = {
+    dotfiles = false,
+    custom = {},
+    exclude = {},
   },
   git = {
     enable = true,
     ignore = true,
-    timeout = 500,
+    timeout = 400,
   },
-  view = {
-    width = 30,
-    height = 30,
-    hide_root_folder = false,
-    side = "left",
-    -- auto_resize = true,
-    mappings = {
-      custom_only = false,
-      list = {
-        { key = { "l", "<CR>", "o" }, action = "edit" },
-        { key = "h", action ="close_node" },
-        { key = "gh", action ="toggle_help" },
-        { key = "v", action ="vsplit" },
-        { key = "O", action ="cd" },
+  actions = {
+    use_system_clipboard = true,
+    change_dir = {
+      enable = true,
+      global = false,
+      restrict_above_cwd = false,
+    },
+    open_file = {
+      quit_on_open = false,
+      resize_window = false,
+      window_picker = {
+        enable = true,
+        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+        exclude = {
+          filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+          buftype = { "nofile", "terminal", "help" },
+        },
       },
     },
-    number = false,
-    relativenumber = false,
   },
-  -- quit_on_open = 0,
-  -- git_hl = 1,
-  -- disable_window_picker = 0,
-  -- root_folder_modifier = ":t",
-  --show_icons = {
-  --  git = 1,
-  --  folders = 1,
-  --  files = 1,
-  --  folder_arrows = 1,
-  --  tree_width = 30,
-  --},
-  actions = {
-    open_file = {
-        resize_window = true    -- close half-screen usage when open a new file
-    }
-  }
+  trash = {
+    cmd = "trash",
+    require_confirm = true,
+  },
+  log = {
+    enable = false,
+    truncate = false,
+    types = {
+      all = false,
+      config = false,
+      copy_paste = false,
+      diagnostics = false,
+      git = false,
+      profile = false,
+    },
+  },
 }
+)
 
+--
 -- with relative path
-require"nvim-tree.events".on_file_created(function(file) vim.cmd("edit "..file.fname) end)
+require "nvim-tree.events".on_file_created(function(file) vim.cmd("edit " .. file.fname) end)
 -- with absolute path
 -- require"nvim-tree.events".on_file_created(function(file) vim.cmd("edit "..vim.fn.fnamemodify(file.fname, ":p")) end)
 
+-- auto close feature
+-- vim.cmd(
+--   [[
+--     autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif
+-- ]]
+-- )
