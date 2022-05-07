@@ -40,8 +40,8 @@ keymap("n", "<leader>w", ":w<cr>", opts)
 -- exit cur window
 keymap("n", "<leader>q", ":q<cr>", opts)
 -- delete cur buffer
-keymap("n", "<leader>d", ":Bdelete<cr>", opts)
-keymap("n", "<leader>D", ":Bdelete<cr>", opts)
+keymap("n", "<leader>d", ":bdelete<cr>", opts)
+keymap("n", "<leader>D", ":bdelete<cr>", opts)
 -- exit whole program
 keymap("n", "ZZ", ":lua require('user.utils').SaveAndExit()<cr>", opts)
 -- remap macro record key
@@ -161,3 +161,9 @@ vim.cmd(
   nnoremap <leader>s :call search('\w\>', 'c')<CR>a<C-X><C-S>
 ]])
 
+
+-- for gtags
+-- find functions calling this function
+keymap("n", "<leader>U", ":cs find c <C-R>=expand('<cword>')<CR><CR>", opts)
+-- find definition
+keymap("n", "<leader>T", ":cs find g <C-R>=expand('<cword>')<CR><CR>", opts)

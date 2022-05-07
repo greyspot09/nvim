@@ -6,8 +6,8 @@ if not status_ok then
 end
 
 -- NOTE: if use 'light' theme, you  should change backgournd and style to 'light'
--- vim.o.background='dark'
-vim.o.background='light'
+vim.o.background='dark'
+-- vim.o.background='light'
 onedark.setup {
   -- Main options --
   style = 'light', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
